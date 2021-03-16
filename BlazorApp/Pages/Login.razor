@@ -19,8 +19,12 @@
 
     private async Task OnSubmit()
     {
+        // Simulates to get the token. It needs to be changed!
         var response = await Http.PostAsJsonAsync<LoginModel>("https://localhost:44380/api/authentication/signin", model);
+
         await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
+
+        // Means this page
         NavManager.NavigateTo("/");
     }
 
