@@ -19,9 +19,10 @@
 
     private async Task OnSubmit()
     {
-        // Simulates to get the token. It needs to be changed!
-        var response = await Http.PostAsJsonAsync<LoginModel>("https://localhost:44380/api/authentication/signin", model);
+        // Saves a Http Response Message.
+        var response = await Http.PostAsJsonAsync<LoginModel>("https://localhost:44397/api/Authentication/login", model);
 
+        // Converts the Response Message to a string. 
         await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
 
         // Means this page
@@ -31,7 +32,10 @@
 
     public class LoginModel
     {
+        //[Required]
+        //[StringLength]
         public string Email { get; set; }
+
         public string Password { get; set; }
     }
 }

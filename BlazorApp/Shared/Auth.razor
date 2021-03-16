@@ -1,23 +1,17 @@
 ﻿@code {
-
-    private bool authenticated = false;
+    private string accessToken { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             // @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-            authenticated = bool.Parse(await sessionStorage.GetItemAsync<string>("auth"));
+            accessToken = await sessionStorage.GetItemAsync<string>("auth");
         }
-        catch
-        {
-            // Same with line 3, but it is good to have it here too.
-            authenticated = false;
-        }
+        catch { }
 
         // @inject NavigationManager NavManager
-        if (!authenticated)
-            // If it is not authenticated, goes to the login page.
+        if (accessToken == null)
             NavManager.NavigateTo("/login");
     }
 }
