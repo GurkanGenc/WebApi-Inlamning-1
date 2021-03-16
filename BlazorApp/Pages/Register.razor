@@ -1,0 +1,67 @@
+﻿@page "/register"
+
+<div class="container"><h3>Register</h3></div>
+
+<EditForm Model="model" OnSubmit="OnSubmit">
+    <div class="container">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <InputText type="text" class="form-control" id="name" @bind-Value="model.FirstName" />
+        </div>
+
+        <div class="mb-3">
+            <label for="surname" class="form-label">Surname</label>
+            <InputText type="text" class="form-control" id="surname" @bind-Value="model.LastName" />
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <InputText type="text" class="form-control" id="email" @bind-Value="model.Email" />
+            <div class="form-text">We'll immediately share your email with the highest bidder.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="pass" class="form-label">Password</label>
+            <InputText type="password" class="form-control" id="password" @bind-Value="model.Password" />
+            <div class="form-text">Don't use your bank password! We didn't invest much money for security.</div>
+        </div>
+
+        <button class="btn btn-success" type="submit">Register</button>
+    </div>
+</EditForm>
+
+
+@code {
+    private RegisterModel model { get; set; }
+
+    protected override void OnInitialized()
+    {
+        model = new RegisterModel();
+    }
+
+    private async Task OnSubmit()
+    {
+        // Saves a Http Response Message.
+        var response = await Http.PostAsJsonAsync<RegisterModel>("https://localhost:44397/api/Authentication/register", model);
+
+        // Converts the Response Message to a string.
+        await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
+
+        // Means this page
+        NavManager.NavigateTo("/");
+    }
+
+
+    public class RegisterModel
+    {
+        //[Required]
+        //[StringLength]
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+    }
+}
