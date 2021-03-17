@@ -1,8 +1,7 @@
 ﻿@page "/users"
-@inject HttpClient Http
 <Auth />
 
-<h3>DeskHelpers</h3>
+<h3>Desk Helpers</h3>
 
 @if (users == null)
 {
@@ -38,7 +37,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        // "UserAccessKey" here should have the same name with in the ApiKeyAuthAttribute counterpart.
         users = await Http.GetFromJsonAsync<IEnumerable<UserModel>>("https://localhost:44397/api/Users");
     }
 }

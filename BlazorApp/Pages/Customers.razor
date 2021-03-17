@@ -1,0 +1,40 @@
+﻿@page "/customers"
+@*<Auth />*@
+
+<h3>Customers</h3>
+
+@if (customers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ticket Id</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in customers)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@customer.CustomerName</td>
+                    <td>@customer.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<TicketModel> customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await Http.GetFromJsonAsync<IEnumerable<TicketModel>>("https://localhost:44397/api/tickets");
+    }
+}

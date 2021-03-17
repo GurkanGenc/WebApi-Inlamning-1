@@ -1,0 +1,47 @@
+﻿@page "/tickets"
+@*<Auth />*@
+
+<h3>Tickets</h3>
+
+@if (tickets == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Helper's Id</th>
+                <th>Customer Name</th>
+                <th>Created by</th>
+                <th>Changed by</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in tickets)
+            {
+            <tr>
+                <td>@ticket.Id</td>
+                <td>@ticket.UserId</td>
+                <td>@ticket.CustomerName</td>
+                <td>@ticket.Created</td>
+                <td>@ticket.Changed</td>
+                <td>@ticket.Status</td>
+                <td><button class="btn btn-success" type="submit">Edit</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<TicketModel> tickets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tickets = await Http.GetFromJsonAsync<IEnumerable<TicketModel>>("https://localhost:44397/api/Tickets");
+    }
+}
