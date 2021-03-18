@@ -12,8 +12,9 @@
         <div class="mb-3">
             <label for="pass" class="form-label">Password</label>
             <InputText type="password" class="form-control" id="password" @bind-Value="model.Password" />
+        </div>
 
-        </div>    <button class="btn btn-success" type="submit">Log In</button>
+        <button class="btn btn-success" type="submit">Log In</button>
     </div>
 </EditForm>
 
@@ -41,8 +42,6 @@
 
     public class LoginModel
     {
-        //[Required]
-        //[StringLength]
         public string Email { get; set; }
 
         public string Password { get; set; }

@@ -23,7 +23,8 @@ namespace SharedLibrary.Models
     }
     public enum TicketStatus
     {
-        [Display(Prompt = "Not Started")] NotStarted,
+        [Display(Name = "Not Started")]
+        NotStarted,
         Ongoing,
         Closed
     }

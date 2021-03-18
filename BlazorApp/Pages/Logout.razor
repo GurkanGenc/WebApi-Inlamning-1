@@ -1,0 +1,13 @@
+﻿@page "/logout"
+
+<span>You logged out.</span>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await sessionStorage.GetItemAsync<string>("auth");
+        await sessionStorage.ClearAsync();
+
+        //NavManager.NavigateTo("/users");
+    }
+}
