@@ -14,30 +14,6 @@
             <InputText type="text" class="form-control" id="surname" @bind-Value="model.CustomerName" />
         </div>
 
-        @*<div class="mb-3">
-            <label for="email" class="form-label">Created by</label>
-            <InputText type="date" class="form-control" id="email" @bind-Value="model.Created" />
-        </div>
-
-        <div class="mb-3">
-            <label for="pass" class="form-label">Changed by</label>
-            <InputText type="text" class="form-control" id="password" @bind-Value="model.Changed" />
-        </div>
-
-        <div class="mb-3">
-            <label for="pass" class="form-label">Status</label>
-            <InputText type="text" class="form-control" id="password" @bind-Value="CreateTicketModel.Status.notStarted" />
-        </div>*@
-
-        @*<InputSelect @bind-Value="model">
-            <option value="Select" selected disabled="disabled" title="Status">Choose the Status</option>
-            @foreach (var value in Enum.GetValues(typeof(TicketStatus)))
-            {
-                <option>@value</option>
-
-            }
-        </InputSelect>*@
-
         <button class="btn btn-success" type="submit">Create</button>
     </div>
 </EditForm>
@@ -54,31 +30,18 @@
         // Saves a Http Response Message.
         var response = await Http.PostAsJsonAsync<CreateTicketModel>("https://localhost:44397/api/Tickets", model);
 
-        // Means this page
         NavManager.NavigateTo("/tickets");
     }
 
 
     public class CreateTicketModel
     {
-        //[Required]
-        //[StringLength]
         public string UserId { get; set; }
 
         public string CustomerName { get; set; }
-
-        public TicketStatus Status { get; set; }
 
         //public DateTime Created { get; set; }
 
         //public DateTime Changed { get; set; }
     }
-
-    //public enum Status
-    //{
-    //    //[DisplayName("Not Started")]
-    //    NotStarted,
-    //    Ongoing,
-    //    Closed
-    //}
 }

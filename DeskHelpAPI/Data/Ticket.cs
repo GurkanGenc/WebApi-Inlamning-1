@@ -28,13 +28,4 @@ namespace DeskHelpAPI.Data
         [Required]
         public TicketStatus Status { get; set; }
     }
-
-    public enum TicketStatus
-    {
-        //[Display(Name = "Not started")]
-        notStarted,
-        ongoing,
-        closed
-    }
-
 }

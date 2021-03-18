@@ -1,5 +1,5 @@
 ﻿@page "/register"
-
+@*<Auth />*@
 <div class="container"><h3>Register</h3></div>
 
 <EditForm Model="model" OnSubmit="OnSubmit">
@@ -47,15 +47,12 @@
         // Converts the Response Message to a string.
         await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
 
-        // Means this page
-        //NavManager.NavigateTo("/");
+        NavManager.NavigateTo("/users");
     }
 
 
     public class RegisterModel
     {
-        //[Required]
-        //[StringLength]
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
