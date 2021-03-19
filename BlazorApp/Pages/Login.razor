@@ -1,6 +1,24 @@
-﻿@page "/login"
+﻿@layout LoginLayout
+@page "/login"
 
-<div class="container"><h3>Login</h3></div>
+<center>
+    <EditForm Model="model" OnSubmit="OnSubmit">
+        <div class="vh-100 d-flex justify-content-evenly w-50 align-items-center">
+            <div class="d-flex justify-content-end w-50">
+                <img class="d-block w-75" src="images/HelpDesk.png" alt="help desk logo">
+            </div>
+            <div class="border border-2 h-50 ms-0"></div>
+            <div class="pt-3">
+                <h2 style="color: #1b416b;">Help Desk Login</h2>
+                <InputText type="email" class="form-control mb-4 mt-4 border-0 w-100" id="email" @bind-Value="model.Email" placeholder="Email" />
+                <InputText type="password" class="form-control border-0 w-100" id="password" @bind-Value="model.Password" placeholder="Password" />
+                <button class="btn mt-4 w-100" type="submit">Login</button>
+            </div>
+        </div>
+    </EditForm>
+</center>
+
+@*<div class="container"><h3>Login</h3></div>
 
 <EditForm Model="model" OnSubmit="OnSubmit">
     <div class="container">
@@ -16,7 +34,7 @@
 
         <button class="btn btn-success" type="submit">Log In</button>
     </div>
-</EditForm>
+</EditForm>*@
 
 
 @code {
@@ -32,11 +50,14 @@
         // Saves a Http Response Message.
         var response = await Http.PostAsJsonAsync<LoginModel>("https://localhost:44397/api/Authentication/login", model);
 
-        // Converts the Response Message to a string. 
-        await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
+        if (response.IsSuccessStatusCode)
+        {
+            // Converts the Response Message to a string. 
+            await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
 
-        // Means this page
-        NavManager.NavigateTo("/");
+            // Means this page
+            NavManager.NavigateTo("/");
+        }
     }
 
 
