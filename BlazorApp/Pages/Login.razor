@@ -10,8 +10,8 @@
             <div class="border border-2 h-50 ms-0"></div>
             <div class="pt-3">
                 <h2 style="color: #1b416b;">Help Desk Login</h2>
-                <InputText type="email" class="form-control mb-4 mt-4 border-0 w-100" id="email" @bind-Value="model.Email" placeholder="Email" />
-                <InputText type="password" class="form-control border-0 w-100" id="password" @bind-Value="model.Password" placeholder="Password" />
+                <InputText type="email" class="form-control mb-4 mt-4 border-0 w-100" id="email" @bind-Value="model.Email" placeholder="Email" required />
+                <InputText type="password" class="form-control border-0 w-100" id="password" @bind-Value="model.Password" placeholder="Password" required />
                 <button class="btn btn-primary mt-4 w-100" type="submit">Login</button>
                 <p class="mt-2 mb-2">or</p>
                 <a href="/register" class="btn btn-primary w-100">Register</a>
@@ -33,20 +33,13 @@
         // Saves a Http Response Message.
         var response = await Http.PostAsJsonAsync<LoginModel>("https://localhost:44397/api/Authentication/login", model);
 
-        //if (response.IsSuccessStatusCode)
-        //{
-        //    // Converts the Response Message to a string. 
-        //    await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
+        if (response.IsSuccessStatusCode)
+        {
+            // Converts the Response Message to a string. 
+            await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
 
-        //    // Means this page
-        //    NavManager.NavigateTo("/");
-        //}
-
-        // Converts the Response Message to a string. 
-        await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
-
-        // Means this page
-        NavManager.NavigateTo("/");
+            NavManager.NavigateTo("/");
+        }
     }
 
 

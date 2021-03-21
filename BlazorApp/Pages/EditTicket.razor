@@ -43,7 +43,8 @@
     {
         try
         {
-            model.Changed = DateTime.UtcNow;
+            model.Created = DateTime.Now;
+            model.Changed = DateTime.Now;
             // Saves a Http Response Message.
             var response = await Http.PutAsJsonAsync<EditTicketModel>($"https://localhost:44397/api/Tickets/{model.Id}", model);
 
