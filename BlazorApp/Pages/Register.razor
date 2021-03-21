@@ -1,35 +1,24 @@
-﻿@page "/register"
-@*<Auth />*@
-<div class="container"><h3>Register</h3></div>
+﻿@layout LoginLayout
+@page "/register"
 
-<EditForm Model="model" OnSubmit="OnSubmit">
-    <div class="container">
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <InputText type="text" class="form-control" id="name" @bind-Value="model.FirstName" />
+<center>
+    <EditForm Model="model" OnSubmit="OnSubmit">
+        <div class="vh-100 d-flex justify-content-evenly w-50 align-items-center">
+            <div class="d-flex justify-content-end w-50">
+                <img class="d-block w-75" src="images/HelpDesk.png" alt="help desk logo">
+            </div>
+            <div class="border border-2 h-50 ms-0"></div>
+            <div class="pt-3" novalidate>
+                <h2 style="color: #1b416b;">Help Desk Register</h2>
+                <InputText type="text" class="form-control mb-4 border-0 w-100" id="name" @bind-Value="model.FirstName" placeholder="Name" required />
+                <InputText type="text" class="form-control border-0 w-100" id="surname" @bind-Value="model.LastName" placeholder="Surname" required />
+                <InputText type="email" class="form-control mb-4 mt-4 border-0 w-100" id="email" @bind-Value="model.Email" placeholder="Email" required />
+                <InputText type="password" class="form-control border-0 w-100" id="password" @bind-Value="model.Password" placeholder="Password" required />
+                <button class="btn btn-primary mt-4 w-100" type="submit">Register</button>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="surname" class="form-label">Surname</label>
-            <InputText type="text" class="form-control" id="surname" @bind-Value="model.LastName" />
-        </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <InputText type="text" class="form-control" id="email" @bind-Value="model.Email" />
-            <div class="form-text">We'll immediately share your email with the highest bidder.</div>
-        </div>
-
-        <div class="mb-3">
-            <label for="pass" class="form-label">Password</label>
-            <InputText type="password" class="form-control" id="password" @bind-Value="model.Password" />
-            <div class="form-text">Don't use your bank password! We didn't invest much money for security.</div>
-        </div>
-
-        <button class="btn btn-success" type="submit">Register</button>
-    </div>
-</EditForm>
-
+    </EditForm>
+</center>
 
 @code {
     private RegisterModel model { get; set; }

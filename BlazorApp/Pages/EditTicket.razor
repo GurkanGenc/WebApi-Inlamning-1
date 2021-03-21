@@ -1,22 +1,19 @@
 ﻿@page "/editticket"
-@*<Auth />*@
+
 <div class="container"><h3>Edit Ticket</h3></div>
 
 <EditForm Model="model" OnSubmit="OnSubmit">
-    <div class="container">
+    <div class="container" novalidate>
         <div class="mb-3">
-            <label for="ticketid" class="form-label">Ticket Id</label>
-            <InputText type="text" class="form-control" id="ticketid" @bind-Value="model.Id" />
+            <InputText type="text" class="form-control" id="ticketid" @bind-Value="model.Id" placeholder="Ticket Id" required />
         </div>
 
         <div class="mb-3">
-            <label for="userid" class="form-label">User Id</label>
-            <InputText type="text" class="form-control" id="userid" @bind-Value="model.UserId" />
+            <InputText type="text" class="form-control" id="userid" @bind-Value="model.UserId" placeholder="User Id" required />
         </div>
 
         <div class="mb-3">
-            <label for="customername" class="form-label">Customer Name</label>
-            <InputText type="text" class="form-control" id="customername" @bind-Value="model.CustomerName" />
+            <InputText type="text" class="form-control" id="customername" @bind-Value="model.CustomerName" placeholder="Customer Name" required />
         </div>
 
         <div class="mb-0">
@@ -31,7 +28,7 @@
             </InputSelect>
         </div>
 
-        <button class="btn btn-success" type="submit">Edit</button>
+        <button class="btn btn-primary" type="submit">Edit</button>
     </div>
 </EditForm>
 @code {
@@ -44,10 +41,16 @@
 
     private async Task OnSubmit()
     {
-        // Saves a Http Response Message.
-        var response = await Http.PutAsJsonAsync<EditTicketModel>($"https://localhost:44397/api/Tickets/{model.Id}", model);
+        try
+        {
+            model.Changed = DateTime.UtcNow;
+            // Saves a Http Response Message.
+            var response = await Http.PutAsJsonAsync<EditTicketModel>($"https://localhost:44397/api/Tickets/{model.Id}", model);
 
-        NavManager.NavigateTo("/tickets");
+            if (response.IsSuccessStatusCode)
+                NavManager.NavigateTo("/tickets");
+        }
+        catch { }
     }
 
 

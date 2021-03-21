@@ -1,20 +1,21 @@
 ﻿@page "/createticket"
-@*<Auth />*@
+
 <div class="container"><h3>Create Ticket</h3></div>
 
 <EditForm Model="model" OnSubmit="OnSubmit">
-    <div class="container">
+    <div class="container" novalidate>
         <div class="mb-3">
-            <label for="name" class="form-label">Helper's Id</label>
-            <InputText type="text" class="form-control" id="name" @bind-Value="model.UserId" />
+            <InputText type="text" class="form-control" id="id" @bind-Value="model.UserId" placeholder="Helper's Id" required />
+            <div class="invalid-feedback">
+                Please enter a User Id!
+            </div>
         </div>
 
         <div class="mb-3">
-            <label for="surname" class="form-label">Customer Name</label>
-            <InputText type="text" class="form-control" id="surname" @bind-Value="model.CustomerName" />
+            <InputText type="text" class="form-control" id="name" @bind-Value="model.CustomerName" placeholder="Customer Name" required />
         </div>
 
-        <button class="btn btn-success" type="submit">Create</button>
+        <button class="btn btn-primary" type="submit">Create</button>
     </div>
 </EditForm>
 @code {
@@ -27,10 +28,17 @@
 
     private async Task OnSubmit()
     {
-        // Saves a Http Response Message.
-        var response = await Http.PostAsJsonAsync<CreateTicketModel>("https://localhost:44397/api/Tickets", model);
+        try
+        {
+            model.Created = DateTime.UtcNow;
+            // Saves a Http Response Message.
+            var response = await Http.PostAsJsonAsync<CreateTicketModel>("https://localhost:44397/api/Tickets", model);
 
-        NavManager.NavigateTo("/tickets");
+            if (response.IsSuccessStatusCode)
+                NavManager.NavigateTo("/tickets");
+        }
+            catch { }
+
     }
 
 
@@ -40,8 +48,8 @@
 
         public string CustomerName { get; set; }
 
-        //public DateTime Created { get; set; }
+        public DateTime Created { get; set; }
 
-        //public DateTime Changed { get; set; }
+        public DateTime Changed { get; set; }
     }
 }

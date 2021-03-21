@@ -12,30 +12,13 @@
                 <h2 style="color: #1b416b;">Help Desk Login</h2>
                 <InputText type="email" class="form-control mb-4 mt-4 border-0 w-100" id="email" @bind-Value="model.Email" placeholder="Email" />
                 <InputText type="password" class="form-control border-0 w-100" id="password" @bind-Value="model.Password" placeholder="Password" />
-                <button class="btn mt-4 w-100" type="submit">Login</button>
+                <button class="btn btn-primary mt-4 w-100" type="submit">Login</button>
+                <p class="mt-2 mb-2">or</p>
+                <a href="/register" class="btn btn-primary w-100">Register</a>
             </div>
         </div>
     </EditForm>
 </center>
-
-@*<div class="container"><h3>Login</h3></div>
-
-<EditForm Model="model" OnSubmit="OnSubmit">
-    <div class="container">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <InputText type="text" class="form-control" id="email" @bind-Value="model.Email" />
-        </div>
-
-        <div class="mb-3">
-            <label for="pass" class="form-label">Password</label>
-            <InputText type="password" class="form-control" id="password" @bind-Value="model.Password" />
-        </div>
-
-        <button class="btn btn-success" type="submit">Log In</button>
-    </div>
-</EditForm>*@
-
 
 @code {
     private LoginModel model { get; set; }
@@ -50,14 +33,20 @@
         // Saves a Http Response Message.
         var response = await Http.PostAsJsonAsync<LoginModel>("https://localhost:44397/api/Authentication/login", model);
 
-        if (response.IsSuccessStatusCode)
-        {
-            // Converts the Response Message to a string. 
-            await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
+        //if (response.IsSuccessStatusCode)
+        //{
+        //    // Converts the Response Message to a string. 
+        //    await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
 
-            // Means this page
-            NavManager.NavigateTo("/");
-        }
+        //    // Means this page
+        //    NavManager.NavigateTo("/");
+        //}
+
+        // Converts the Response Message to a string. 
+        await sessionStorage.SetItemAsync<string>("auth", await response.Content.ReadAsStringAsync());
+
+        // Means this page
+        NavManager.NavigateTo("/");
     }
 
 
